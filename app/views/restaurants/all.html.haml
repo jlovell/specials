@@ -1,0 +1,17 @@
+- @restaurants.each do |rest|
+  %h2= rest.name
+  %h6= rest.address
+  - rest.specials.for(params[:day] || Date.today).each do |special|
+    - if special.food.present?
+      %p
+        Food:
+        = special.food
+    - if special.drink.present?
+      %p
+        Drink:
+        = special.drink
+
+
+- markers = @restaurants.all.map { |place| "&markers=color:green%7C#{place[:latitude]},#{place[:longitude]}"}.join
+
+= image_tag "http://maps.googleapis.com/maps/api/staticmap?center=#{@location[:latitude]},#{@location[:longitude]}&zoom=14&size=640x500&maptype=roadmap&markers=color:blue%7C#{@location[:latitude]},#{@location[:longitude]}#{markers}&sensor=false"

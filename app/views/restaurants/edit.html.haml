@@ -1,0 +1,10 @@
+= form_for @restaurant do |f|
+  = f.text_field :name, class: "form-control", placeholder:  "Name"
+  = f.text_field :address, class: "form-control", placeholder: "Address"
+  = f.fields_for :specials do |specials_fields|
+    = specials_fields.text_field :food, class: "form-control", placeholder: "Food"
+    = specials_fields.text_field :drink, class: "form-control", placeholder: "Drink"
+
+  = f.submit
+= @restaurant.inspect
+= @restaurant.specials.inspect

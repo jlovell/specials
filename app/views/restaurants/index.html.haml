@@ -1,0 +1,15 @@
+#content
+  Loading location...
+
+:javascript
+  function doGeolocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(positionSuccess );
+    }
+  }
+  function positionSuccess(position) {
+    var coords = position.coords || position.coordinate || position;
+    $('#content').load('restaurants/all' + '?latitude=' + coords.latitude + '&longitude=' + coords.longitude)
+  }
+
+  doGeolocation()
