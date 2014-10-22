@@ -1,7 +1,8 @@
+%h5= day_name(@day)
 - @restaurants.each do |rest|
   %h2= rest.name
   %h6= rest.address
-  - rest.specials.for(params[:day] || Date.today).each do |special|
+  - rest.specials.for(@day).each do |special|
     - if special.food.present?
       %p
         Food:

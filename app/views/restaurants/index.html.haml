@@ -9,7 +9,8 @@
   }
   function positionSuccess(position) {
     var coords = position.coords || position.coordinate || position;
-    $('#content').load('restaurants/all' + '?latitude=' + coords.latitude + '&longitude=' + coords.longitude)
+    var params = '#{params.except(:action, :controller).to_param}'
+    $('#content').load('restaurants/all?' + params + '&latitude=' + coords.latitude + '&longitude=' + coords.longitude)
   }
 
   doGeolocation()

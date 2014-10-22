@@ -3,6 +3,7 @@ class RestaurantsController < ApplicationController
   end
 
   def all
+    @day = params[:day] || Time.zone.today
     @location = { latitude: params[:latitude], longitude: params[:longitude] }
     @restaurants = Restaurant.near([params[:latitude], params[:longitude]])
   end
