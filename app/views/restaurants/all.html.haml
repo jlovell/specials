@@ -2,7 +2,7 @@
   Viewing
   %strong= day_name(@day)
   specials.
-  = select_tag "weekday", options_for_select(Date::DAYNAMES, day_name(@day))
+  -# = select_tag "weekday", options_for_select(Date::DAYNAMES, day_name(@day))
 - @restaurants.each do |rest|
   .restaurant-specials
     %h4.pull-left= rest.name
