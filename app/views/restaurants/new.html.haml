@@ -1,18 +1,17 @@
-.container
-  = form_for @restaurant do |f|
-    .form-group
-      = f.text_field :name, class: "form-control", placeholder:  "Name"
-      = f.text_field :address, class: "form-control", placeholder: "Address"
+= form_for @restaurant do |f|
+  .form-group
+    = f.text_field :name, class: "form-control", placeholder:  "Name"
+    = f.text_field :address, class: "form-control", placeholder: "Address"
 
-    - @specials.each_with_index do |special, index|
-      = f.fields_for :specials, special do |special_f|
-        .form-group
-          .col-xs-12.col-sm-2
-            = Date::DAYNAMES[special.day]
-            = special_f.hidden_field :day
-          .col-xs-6.col-sm-5
-            = special_f.text_field :food, class: "form-control", placeholder: "Food"
-          .col-xs-6.col-sm-5
-            = special_f.text_field :drink, class: "form-control", placeholder: "Drink"
+  - @specials.each_with_index do |special, index|
+    = f.fields_for :specials, special do |special_f|
+      .form-group
+        .col-xs-12.col-sm-2
+          = Date::DAYNAMES[special.day]
+          = special_f.hidden_field :day
+        .col-xs-6.col-sm-5
+          = special_f.text_field :food, class: "form-control", placeholder: "Food"
+        .col-xs-6.col-sm-5
+          = special_f.text_field :drink, class: "form-control", placeholder: "Drink"
 
-    = f.button class: "btn btn-default"
+  = f.button class: "btn btn-default"

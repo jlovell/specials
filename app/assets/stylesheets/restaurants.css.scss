@@ -1,3 +1,21 @@
-// Place all the styles related to the Restaurant controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.restaurant-specials {
+  border-bottom: 1px solid #ccc;
+  color: #999;
+  h4 {
+    color: #333;
+  }
+  .special-listing {
+    position: relative;
+    padding-left: 40px;
+    &::before {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      height: 20px;
+      width: 20px;
+      background-color: #eee;
+    }
+    .special-food::before { content: "F" }
+    .special-drink::before { content: "D" }
+  }
+}

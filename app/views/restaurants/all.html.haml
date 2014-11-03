@@ -1,16 +1,28 @@
-%h5= day_name(@day)
+%p
+  Viewing
+  %strong= day_name(@day)
+  specials.
+  = select_tag "weekday", options_for_select(Date::DAYNAMES, day_name(@day))
 - @restaurants.each do |rest|
-  %h2= rest.name
-  %h6= rest.address
-  - rest.specials.for(@day).each do |special|
-    - if special.food.present?
-      %p
-        Food:
-        = special.food
-    - if special.drink.present?
-      %p
-        Drink:
-        = special.drink
+  .restaurant-specials
+    %h4.pull-left= rest.name
+    %span.pull-right
+      = link_to "Edit", edit_restaurant_path(rest), confirm: "Are you sure you want to delete #{rest.name}? Please don't do this lightly while this site is in beta. Thx."
+      |
+      = link_to "Delete", rest, method: "delete", confirm: "Are you sure you want to delete #{rest.name}? Please don't do this lightly while this site is in beta. Thx."
+    .clearfix
+    %h6= rest.address
+    - rest.specials.for(@day).each do |special|
+      - if special.food.present?
+        %p.special-listing.special-food
+          - special.food.split(';').each do |item|
+            = item
+            %br
+      - if special.drink.present?
+        %p.special-listing.special-drink
+          - special.drink.split(';').each do |item|
+            = item
+            %br
 
 
 - markers = @restaurants.all.map { |place| "&markers=color:green%7C#{place[:latitude]},#{place[:longitude]}"}.join
