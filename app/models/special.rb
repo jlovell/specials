@@ -1,6 +1,5 @@
 class Special < ActiveRecord::Base
   belongs_to :restaurant
-  before_save :normalize_attributes
 
   validates :day, presence: true, inclusion: { in: (0..6) }
 
@@ -15,10 +14,5 @@ class Special < ActiveRecord::Base
     else
       raise ArgumentError, "Unrecognized day of the week"
     end
-  end
-
-  def normalize_attributes
-    self.food  = food.presence.try(:titleize)
-    self.drink = drink.presence.try(:titleize)
   end
 end

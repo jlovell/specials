@@ -5,8 +5,9 @@ class RestaurantsController < ApplicationController
   def all
     @day = params[:day] || Time.zone.today
     @location = { latitude: params[:latitude], longitude: params[:longitude] }
-    @restaurants = Restaurant.joins(:specials).merge(Special.for(@day))
-      .near([params[:latitude], params[:longitude]]).uniq
+    @restaurants = Restaurant.includes(:specials).merge(Special.for(@day))
+      .near(@location.values).references(:specials).uniq
+    render layout: false
   end
 
   def new

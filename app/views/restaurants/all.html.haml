@@ -5,26 +5,29 @@
   -# = select_tag "weekday", options_for_select(Date::DAYNAMES, day_name(@day))
 - @restaurants.each do |rest|
   .restaurant-specials
-    %h4.pull-left= rest.name
-    %span.pull-right
-      = link_to "Edit", edit_restaurant_path(rest), confirm: "Are you sure you want to delete #{rest.name}? Please don't do this lightly while this site is in beta. Thx."
-      |
-      = link_to "Delete", rest, method: "delete", confirm: "Are you sure you want to delete #{rest.name}? Please don't do this lightly while this site is in beta. Thx."
+
+    %h4.rest-name.pull-left= rest.name
+    = link_to "https://www.google.com/search?q=#{rest.name.tr(' ', '+')}+Chicago", target: '_blank' do
+      %i.rest-search.fa.fa-search.pull-right
+    - if ENV['ADMIN']
+      %span.admin-controls.small.pull-right
+        = link_to "Edit", edit_restaurant_path(rest)
+        |
+        = link_to "Delete", rest, method: "delete", data: { confirm: "Are you sure you want to delete #{rest.name}? Please don't do this lightly while this site is in beta. Thx." }
+        |
     .clearfix
-    %h6= rest.address
-    - rest.specials.for(@day).each do |special|
-      - if special.food.present?
-        %p.special-listing.special-food
-          - special.food.split(';').each do |item|
-            = item
-            %br
-      - if special.drink.present?
-        %p.special-listing.special-drink
-          - special.drink.split(';').each do |item|
-            = item
-            %br
+    .rest-address.small= link_to rest.address, "https://www.google.com/maps/place/#{rest.address.tr(' ', '+')}", target: '_blank'
+    - rest.specials.each do |special|
+      .row
+        - %w(food drink).each do |type|
+          .col-sm-6
+            - if special.send(type).present?
+              %p.special-listing{ class: "special-#{type}" }
+                - special.send(type).split(';').each do |item|
+                  = item
+                  %br
 
+-#
+  - markers = @restaurants.all.map { |place| "&markers=color:green%7C#{place[:latitude]},#{place[:longitude]}"}.join
 
-- markers = @restaurants.all.map { |place| "&markers=color:green%7C#{place[:latitude]},#{place[:longitude]}"}.join
-
-= image_tag "http://maps.googleapis.com/maps/api/staticmap?center=#{@location[:latitude]},#{@location[:longitude]}&zoom=14&size=640x500&maptype=roadmap&markers=color:blue%7C#{@location[:latitude]},#{@location[:longitude]}#{markers}&sensor=false"
+  = image_tag "http://maps.googleapis.com/maps/api/staticmap?center=#{@location[:latitude]},#{@location[:longitude]}&zoom=14&size=640x500&maptype=roadmap&markers=color:blue%7C#{@location[:latitude]},#{@location[:longitude]}#{markers}&sensor=false"
