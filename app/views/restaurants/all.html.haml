@@ -5,29 +5,27 @@
   -# = select_tag "weekday", options_for_select(Date::DAYNAMES, day_name(@day))
 - @restaurants.each do |rest|
   .restaurant-specials
-
-    %h4.rest-name.pull-left= rest.name
-    = link_to "https://www.google.com/search?q=#{rest.name.tr(' ', '+')}+Chicago", target: '_blank' do
+    %h4.rest-name.pull-left= link_to rest.name, restaurant_path(rest.restaurant)
+    = link_to rest.google_link, target: "_blank" do
       %i.rest-search.fa.fa-search.pull-right
     - if ENV['ADMIN']
       %span.admin-controls.small.pull-right
-        = link_to "Edit", edit_restaurant_path(rest)
+        = link_to "Edit", edit_restaurant_path(rest.restaurant)
         |
-        = link_to "Delete", rest, method: "delete", data: { confirm: "Are you sure you want to delete #{rest.name}? Please don't do this lightly while this site is in beta. Thx." }
+        = link_to "Delete", rest.restaurant, method: "delete", data: { confirm: "Are you sure you want to delete #{rest.name}? Please don't do this lightly while this site is in beta. Thx." }
         |
     .clearfix
-    .rest-address.small= link_to rest.address, "https://www.google.com/maps/place/#{rest.address.tr(' ', '+')}", target: '_blank'
-    - rest.specials.each do |special|
+    .rest-address.small= link_to rest.address, rest.address_search_link, target: '_blank'
+    - rest.specials.partition(&:food?).flatten.each do |special|
       .row
         - %w(food drink).each do |type|
           .col-sm-6
             - if special.send(type).present?
               %p.special-listing{ class: "special-#{type}" }
-                - special.send(type).split(';').each do |item|
-                  = item
-                  %br
+                = special.send(type)
+                %br
 
 -#
-  - markers = @restaurants.all.map { |place| "&markers=color:green%7C#{place[:latitude]},#{place[:longitude]}"}.join
+  - markers = @restaurants.all.map(&:maps_marker).join
 
   = image_tag "http://maps.googleapis.com/maps/api/staticmap?center=#{@location[:latitude]},#{@location[:longitude]}&zoom=14&size=640x500&maptype=roadmap&markers=color:blue%7C#{@location[:latitude]},#{@location[:longitude]}#{markers}&sensor=false"

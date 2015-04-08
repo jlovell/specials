@@ -4,10 +4,17 @@ class RestaurantsController < ApplicationController
 
   def all
     @day = params[:day] || Time.zone.today
-    @location = { latitude: params[:latitude], longitude: params[:longitude] }
+    session[:latitude]  = params[:latitude]
+    session[:longitude] = params[:longitude]
+    @location = { latitude: session[:latitude], longitude: session[:longitude] }
     @restaurants = Restaurant.includes(:specials).merge(Special.for(@day))
-      .near(@location.values).references(:specials).uniq
+      .near(@location.values).references(:specials).uniq.map(&:decorate)
     render layout: false
+  end
+
+  def show
+    @restaurant = Restaurant.find(params[:id]).decorate
+    @specials = @restaurant.specials.group_by(&:day)
   end
 
   def new

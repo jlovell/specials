@@ -4,13 +4,20 @@
 :javascript
   function doGeolocation() {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(positionSuccess );
+      navigator.geolocation.getCurrentPosition(positionSuccess);
     }
   }
   function positionSuccess(position) {
     var coords = position.coords || position.coordinate || position;
+    var latitude = coords.latitude
+    var longitude = coords.longitude
+    refreshListing(latitude, longitude)
+  }
+  function refreshListing(latitude, longitude) {
     var params = '#{params.except(:action, :controller).to_param}'
-    $('#content').load('restaurants/all?' + params + '&latitude=' + coords.latitude + '&longitude=' + coords.longitude)
+    $('#content').load('restaurants/all?' + params + '&latitude=' + latitude + '&longitude=' + longitude)
   }
 
-  doGeolocation()
+  #{session[:latitude] && session[:longitude] ?
+    "refreshListing(" + session[:latitude] + ", " + session[:longitude] + ")" :
+    "doGeolocation()"}

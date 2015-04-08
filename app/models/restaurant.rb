@@ -11,4 +11,8 @@ class Restaurant < ActiveRecord::Base
     self.address &&= address.tr('.','').titleize
     self.address += ", Chicago, IL" unless self.address =~ /chicago/i
   end
+
+  def decorate
+    ::RestaurantDecorator.new(self)
+  end
 end

@@ -1,0 +1,15 @@
+%h3= @restaurant.name
+.rest-address.small= link_to @restaurant.address, @restaurant.address_search_link, target: '_blank'
+- [*(1..6), 0].each do |day|
+  - unless @specials[day].blank?
+    %h4= Date::DAYNAMES[day]
+    - @specials[day].try(:each) do |special|
+      - if special.food
+        Food:
+        = special.food
+      - if special.drink
+        Drink:
+        = special.drink
+      %br
+
+
