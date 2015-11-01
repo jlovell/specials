@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
-ruby '2.1.3'
+ruby '2.2.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.6'
+gem 'rails', '4.2.0'
 # Use postgresql as the database for Active Record
 gem 'pg'
 # Use SCSS for stylesheets
@@ -17,7 +17,9 @@ gem 'haml'
 # gem 'therubyracer',  platforms: :ruby
 
 gem 'geocoder'
-gem "twitter-bootstrap-rails"
+gem 'twitter-bootstrap-rails'
+gem 'awesome_print'
+
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
