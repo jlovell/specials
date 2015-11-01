@@ -8,7 +8,7 @@
     %meta{ name: "viewport", content: "width=device-width, initial-scale=1" }
     = yield(:head) if content_for?(:head)
   %body
-    .container
+    .container{ style: "padding-top: 10px;" }
       - flash.each do |key, value|
         %div{:class => "alert alert-#{key}"}= value
       = yield

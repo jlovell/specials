@@ -1,7 +1,12 @@
 class Special < ActiveRecord::Base
+  self.inheritance_column = nil
+
   belongs_to :restaurant
 
   validates :day, presence: true, inclusion: { in: (0..6) }
+
+  scope :food,  -> { where(type: "food")  }
+  scope :drink, -> { where(type: "drink") }
 
   def self.for(day)
     case day

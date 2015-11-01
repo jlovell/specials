@@ -3,7 +3,7 @@ class RestaurantsController < ApplicationController
   end
 
   def all
-    @day = params[:day] || Time.zone.today
+    @day = params[:day] || Date.current
     session[:latitude]  = params[:latitude]
     session[:longitude] = params[:longitude]
     @location = { latitude: session[:latitude], longitude: session[:longitude] }
