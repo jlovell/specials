@@ -14,12 +14,12 @@ class RestaurantsController < ApplicationController
 
   def show
     @restaurant = Restaurant.find(params[:id]).decorate
-    @specials = @restaurant.specials.group_by(&:day)
+    @specials = @restaurant.specials.order(:day).group_by(&:day)
   end
 
   def show_specials
     @restaurant = Restaurant.find(params[:id]).decorate
-    @specials = @restaurant.specials.group_by(&:day)
+    @specials = @restaurant.specials.order(:day).group_by(&:day)
     render partial: "show_specials"
   end
 
