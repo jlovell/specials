@@ -1,0 +1,5 @@
+$( '#form-<%= @form_id %> .btn' )
+  .removeClass('btn-primary')
+  .addClass('btn-success')
+  .prop('value', 'Saved!')
+$( '#show-specials' ).load('<%= show_specials_restaurant_path(@restaurant_id) %>')

@@ -17,16 +17,21 @@ class RestaurantsController < ApplicationController
     @specials = @restaurant.specials.group_by(&:day)
   end
 
+  def show_specials
+    @restaurant = Restaurant.find(params[:id]).decorate
+    @specials = @restaurant.specials.group_by(&:day)
+    render partial: "show_specials"
+  end
+
   def new
     @restaurant = Restaurant.new
-    @specials = 7.times.map { |i| @restaurant.specials.new(day: i) }
   end
 
   def create
     @restaurant = Restaurant.new(params[:restaurant].permit!)
     if @restaurant.save
       flash[:success] = "#{@restaurant.name} was created successfully!"
-      redirect_to root_path
+      redirect_to restaurant_path(@restaurant)
     else
       flash[:error] = "There was an error creating #{@restaurant.name}."
       render action: "new"

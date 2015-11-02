@@ -3,11 +3,30 @@
     &larr; Back to List
 %h3= @restaurant.name
 .rest-address.small= link_to @restaurant.address, @restaurant.address_search_link, target: '_blank'
-.row
-  - @specials.each do |day, specials|
-    %div{ class: "col-sm-#{12 / @specials.size}" }
-      %h4= Date::DAYNAMES[day]
-      - specials.each do |special|
-        = "#{special.type.capitalize}:"
-        = special.content
-        %br
+%section#show-specials
+  = render partial: "show_specials"
+
+
+%section{ style: "margin-top: 50px;" }
+  Add Special
+  = render partial: "/specials/new_form", locals: { special: @restaurant.specials.new }
+
+
+:scss
+  @media (min-width: 768px) {
+    .columns-5 {
+      .col-md-2 { width: 100%; }
+    }
+    .columns-7 {
+      .col-md-1 { width: 100%; }
+    }
+  }
+
+  @media (min-width: 992px) {
+    .columns-5 {
+      .col-md-2 { width: 20%; }
+    }
+    .columns-7 {
+      .col-md-1 { width: 14.285714285714285714285714285714%; }
+    }
+  }

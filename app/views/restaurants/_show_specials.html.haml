@@ -1,0 +1,9 @@
+.row{ class: "columns-#{@specials.size}" }
+  - @specials.each do |day, specials|
+
+    %div{ class: "col-md-#{12 / @specials.size}" }
+      %h4= Date::DAYNAMES[day]
+      - specials.each do |special|
+        = "#{special.type.capitalize}:"
+        = special.content
+        %br

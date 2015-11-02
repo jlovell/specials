@@ -1,0 +1,11 @@
+= form_for special, url: specials_path, remote: true, html: { id: "form-#{form_id = Kernel.srand}" } do |f|
+  %input{ type: "hidden", id: "form_id", name: "form_id", value: form_id }
+  = f.hidden_field :restaurant_id
+  .row
+    .form-group.col-sm-3
+      = f.select :day, Date::DAYNAMES.each_with_index.to_a, {}, class: "form-control"
+    .form-group.col-sm-2
+      = f.select :type, [%w(Food food), %w(Drink drink)], {}, class: "form-control"
+    .form-group.col-sm-5
+      = f.text_field :content, class: "form-control", placeholder: "Content"
+    .col-sm-2= f.submit class: "btn btn-primary", data: { disable_with: "Sending..."}

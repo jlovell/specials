@@ -1,17 +1,15 @@
-= form_for @restaurant do |f|
+%h4 New Restaurant
+%br
+= form_for @restaurant, class: "form-horizontal" do |f|
   .form-group
-    = f.text_field :name, class: "form-control", placeholder:  "Name"
-    = f.text_field :address, class: "form-control", placeholder: "Address"
+    = f.label :name, class: "control-label col-sm-2"
+    .col-sm-10
+      = f.text_field :name, class: "form-control", placeholder:  "Name"
+    .clearfix
+  .form-group
+    = f.label :address, class: "control-label col-sm-2"
+    .col-sm-10
+      = f.text_field :address, class: "form-control col-sm-10", placeholder: "Address"
+    .clearfix
 
-  - @specials.each_with_index do |special, index|
-    = f.fields_for :specials, special do |special_f|
-      .form-group
-        .col-xs-12.col-sm-2
-          = Date::DAYNAMES[special.day]
-          = special_f.hidden_field :day
-        .col-xs-6.col-sm-5
-          = special_f.text_field :food, class: "form-control", placeholder: "Food"
-        .col-xs-6.col-sm-5
-          = special_f.text_field :drink, class: "form-control", placeholder: "Drink"
-
-  = f.button class: "btn btn-default"
+  .col-sm-10.col-sm-offset-2= f.button class: "btn btn-default"

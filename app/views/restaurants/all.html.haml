@@ -22,12 +22,12 @@
 
     .row
       .col-sm-6
-        - rest.specials.food.each do |special|
+        - rest.specials.for(@day).food.each do |special|
           %p.special-listing{ class: "special-food" }
             = special.content
             %br
       .col-sm-6
-        - rest.specials.drink.each do |special|
+        - rest.specials.for(@day).drink.each do |special|
           %p.special-listing{ class: "special-drink" }
             = special.content
             %br
